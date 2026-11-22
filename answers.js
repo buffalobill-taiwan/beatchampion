@@ -34,6 +34,14 @@ const answers = [
     ],
   },
   {
+    code: 'W8',
+    hashes: [
+      '5334233acd0f3b87f02b3f2c63b99b28938f2ecb3e9410af8d847a3eb744a36f',
+      '943fc63aeb70a6c60a025c22043e7f3aff661674110fd396c85f9ebea24d62a1',
+      'a47b4f70414c498e64b00429edc89b1085f112b9a2c3f59596f7ed96cc670ad8',
+    ],
+  },
+  {
     code: 'W8_4',
     hashes: [
       '5c7536dcd18d90204f0a63391b54d3814d7bd802bc4fdf48492650387ab8ad7e',
