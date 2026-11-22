@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Beat Sun’s Champion!</title>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./script.js" defer></script>
+</head>
+<body>
+  <main>
+    <h1>Beat Sun’s Champion!</h1>
+    <section class="guess-panel" aria-label="Submit an answer">
+      <p id="progress" role="status">The new puzzle is coming soon.</p>
+      <form id="guess-form" hidden>
+        <label for="guess">Card name</label>
+        <div class="guess-controls">
+          <input id="guess" name="guess" type="text" list="card-suggestions" autocomplete="off" enterkeyhint="go" required>
+          <datalist id="card-suggestions"></datalist>
+          <button type="submit">Check</button>
+        </div>
+      </form>
+      <p id="feedback" role="status">Try "Barren Glory" and "Laboratory Maniac".</p>
+    </section>
+    <table id="answers" aria-label="Puzzle answers" hidden>
+      <thead>
+        <tr>
+          <th scope="col">Code</th>
+          <th scope="col">Status</th>
+          <th scope="col">Card name</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <button type="button" id="reset-progress" hidden>Reset progress</button>
+  </main>
+</body>
+</html>

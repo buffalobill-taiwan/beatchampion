@@ -1,0 +1,138 @@
+:root {
+  color-scheme: dark;
+  --page-background: #141923;
+  --surface: #202633;
+  --text: #e5e9f0;
+  --muted-text: #b9c3d5;
+  --divider: #424b5d;
+  --control-border: #77849a;
+  --focus: #9ccaff;
+}
+
+body {
+  margin: 0;
+  background: var(--page-background);
+  color: var(--text);
+  font-family: system-ui, sans-serif;
+}
+
+main {
+  max-width: 40rem;
+  margin: clamp(1rem, 4vh, 3rem) auto;
+  padding-inline: clamp(0.75rem, 4vw, 1.5rem);
+}
+
+button {
+  min-block-size: 44px;
+  padding: 0.625rem 1rem;
+  border: 1px solid var(--control-border);
+  border-radius: 0.5rem;
+  background: #304a78;
+  color: var(--text);
+  font: inherit;
+  cursor: pointer;
+}
+
+button:enabled:hover {
+  background: #3b5688;
+}
+
+:where(input, button):focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.guess-panel {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 1;
+  background: var(--page-background);
+  padding-block: 0.5rem 0.25rem;
+  border-bottom: 1px solid var(--divider);
+}
+
+#progress {
+  margin: 0 0 0.5rem;
+  color: var(--muted-text);
+}
+
+.guess-controls {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+input {
+  flex: 1;
+  min-width: 0;
+  min-block-size: 44px;
+  box-sizing: border-box;
+  padding: 0.625rem;
+  border: 1px solid var(--control-border);
+  border-radius: 0.5rem;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-size: max(1em, 16px);
+}
+
+#feedback {
+  margin: 0.25rem 0 0;
+  color: var(--muted-text);
+  line-height: 1.5;
+  block-size: 3em;
+  overflow-y: auto;
+}
+
+table {
+  width: 100%;
+  background-color: var(--surface);
+  color: var(--text);
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
+th,
+td {
+  padding: 0.625rem clamp(0.25rem, 2vw, 0.625rem);
+  border-bottom: 1px solid var(--divider);
+  overflow-wrap: anywhere;
+}
+
+#answers [data-card-color="W"] {
+  color: #fff7e6;
+}
+
+#answers [data-card-color="U"] {
+  color: #88c4ff;
+}
+
+#answers [data-card-color="B"] {
+  color: #d7aaff;
+}
+
+#answers [data-card-color="R"] {
+  color: #ff929b;
+}
+
+#answers [data-card-color="G"] {
+  color: #83e1a3;
+}
+
+#answers [data-card-color="Z"] {
+  color: #ffda68;
+}
+
+#answers [data-card-color="C"] {
+  color: #b9c3d5;
+}
+
+#answers [data-card-color="L"] {
+  color: #efa978;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
