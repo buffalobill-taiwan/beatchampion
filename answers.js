@@ -200,14 +200,6 @@ const answers = [
     ],
   },
   {
-    code: 'G5_8',
-    hashes: [
-      'a57288e1432d77204177e5774c3bb7d52bd2e113ebb130c41975d047f6d86095',
-      '74f87917f3f0d538640d7afb72a45b452001e452294bef806a61d2fea6410f1f',
-      '1245901d0425ec4f7fe495a0a47f02a5ee957241d1db03e3a97207b60c375f32',
-    ],
-  },
-  {
     code: 'G6_9',
     hashes: [
       '51e0b5a3fa84615b0d6dc09cd0206173a18d34c9b9ab23edca98da6fe2fba1f7',
