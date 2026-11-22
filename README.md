@@ -15,18 +15,6 @@ local storage. Use **Reset progress** to start over.
 The [Rules](rule.html) show the two decks. The [Notes](note.html) explain the
 answer list and why several common guesses fail.
 
-## Run locally
-
-From the repository root, start a local static server.
-
-```sh
-python3 -m http.server 8000 --bind 127.0.0.1
-```
-
-Open [http://localhost:8000/](http://localhost:8000/). Answer checking uses Web
-Crypto, which is available on localhost and HTTPS. Scryfall suggestions require
-an internet connection. GitHub Pages publishes from the root of `main`.
-
 ## Maintain the answer list
 
 Each entry in [answers.js](answers.js) contains a `code` and a `hashes` array.
