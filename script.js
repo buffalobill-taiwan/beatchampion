@@ -19,21 +19,58 @@ const cardSuggestions = document.querySelector('#card-suggestions');
 let suggestionTimer;
 let suggestionRequest;
 let activeSuggestion = -1;
+let lastSuggestions = [];
 
-function clearSuggestions() {
+function cancelSuggestionLookup() {
   clearTimeout(suggestionTimer);
   suggestionRequest?.abort();
-  activeSuggestion = -1;
-  guess.removeAttribute('aria-activedescendant');
-  guess.setAttribute('aria-expanded', 'false');
-  cardSuggestions.hidden = true;
-  cardSuggestions.replaceChildren();
+}
+
+function showSuggestions(names) {
+  const previous = Array.from(cardSuggestions.children);
+  const selected = previous[activeSuggestion];
+  const byName = new Map(previous.map((option) => [option.textContent, option]));
+  const options = names.map((name, index) => {
+    const option = byName.get(name) ?? document.createElement('li');
+    option.id = `card-option-${index}`;
+    option.setAttribute('role', 'option');
+    option.setAttribute('aria-selected', String(option === selected));
+    option.textContent = name;
+    return option;
+  });
+
+  if (options.length !== previous.length || options.some((option, index) => option !== previous[index])) {
+    const scrollTop = cardSuggestions.scrollTop;
+    cardSuggestions.replaceChildren(...options);
+    cardSuggestions.scrollTop = scrollTop;
+  }
+
+  activeSuggestion = options.indexOf(selected);
+  if (activeSuggestion >= 0) {
+    guess.setAttribute('aria-activedescendant', selected.id);
+  } else {
+    guess.removeAttribute('aria-activedescendant');
+  }
+  cardSuggestions.hidden = options.length === 0;
+  guess.setAttribute('aria-expanded', String(!cardSuggestions.hidden));
+}
+
+function clearSuggestions() {
+  cancelSuggestionLookup();
+  lastSuggestions = [];
+  showSuggestions([]);
 }
 
 guess.addEventListener('input', (event) => {
   const query = guess.value.trim();
-  clearSuggestions();
-  if (event.isComposing || query.length < 2) return;
+  cancelSuggestionLookup();
+  if (event.isComposing || query.length < 2) {
+    showSuggestions([]);
+    return;
+  }
+
+  const searchText = query.toLowerCase();
+  showSuggestions(lastSuggestions.filter((name) => name.toLowerCase().includes(searchText)));
 
   suggestionTimer = setTimeout(async () => {
     const request = new AbortController();
@@ -49,20 +86,10 @@ guess.addEventListener('input', (event) => {
       if (!response.ok) return;
 
       const { data } = await response.json();
-      if (request.signal.aborted || !Array.isArray(data) || data.length === 0) return;
+      if (request.signal.aborted || !Array.isArray(data)) return;
 
-      const options = data.map((name, index) => {
-        const option = document.createElement('li');
-        option.id = `card-option-${index}`;
-        option.setAttribute('role', 'option');
-        option.setAttribute('aria-selected', 'false');
-        option.textContent = name;
-        return option;
-      });
-      cardSuggestions.replaceChildren(...options);
-      cardSuggestions.scrollTop = 0;
-      cardSuggestions.hidden = false;
-      guess.setAttribute('aria-expanded', 'true');
+      lastSuggestions = data;
+      showSuggestions(data);
     } catch {
       // Manual entry remains available if suggestions cannot be loaded.
     } finally {
