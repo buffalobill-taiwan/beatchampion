@@ -141,7 +141,7 @@ try {
 
 function updateProgress() {
   progress.textContent = `${solved.size} of ${answers.length} answers found`;
-  resetProgress.disabled = solved.size === 0 || guess.readOnly;
+  resetProgress.hidden = solved.size === 0;
   for (const { id, status, name, mask, revealFrame } of rows) {
     const isSolved = solved.has(id);
     status.textContent = isSolved ? '✅' : '❔';
@@ -226,7 +226,6 @@ async function hashName(name) {
 if (answers.length > 0) {
   form.hidden = false;
   answerTable.hidden = false;
-  resetProgress.hidden = false;
   updateProgress();
 }
 
@@ -302,6 +301,6 @@ form.addEventListener('submit', async (event) => {
     feedback.textContent = 'Unable to check your answer. Try again.';
   } finally {
     guess.readOnly = false;
-    resetProgress.disabled = solved.size === 0;
+    resetProgress.disabled = false;
   }
 });
