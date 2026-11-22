@@ -10,10 +10,36 @@
 }
 
 body {
+  isolation: isolate;
   margin: 0;
   background: var(--page-background);
   color: var(--text);
   font-family: system-ui, sans-serif;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: url("./Elspeth.jpg") center / cover no-repeat;
+  opacity: 0.07;
+}
+
+@keyframes background-drift {
+  from { transform: translateY(16px); }
+  to { transform: translateY(-16px); }
+}
+
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    body::before {
+      inset-block: -16px;
+      animation: background-drift auto linear both;
+      animation-timeline: scroll(root block);
+    }
+  }
 }
 
 main {
@@ -76,6 +102,8 @@ button:enabled:hover {
   inset-block-start: 0;
   z-index: 1;
   background: var(--page-background);
+  background: color-mix(in srgb, var(--page-background) 76%, transparent);
+  backdrop-filter: blur(8px);
   padding-block: 0.5rem 0.25rem;
   border-bottom: 1px solid var(--divider);
 }
@@ -159,6 +187,7 @@ button:enabled:hover {
   width: 100%;
   font-family: ui-monospace, monospace;
   background-color: var(--surface);
+  background-color: color-mix(in srgb, var(--surface) 82%, transparent);
   color: var(--text);
   border-collapse: collapse;
   margin-bottom: 1rem;
