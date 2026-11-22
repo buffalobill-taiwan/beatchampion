@@ -9,6 +9,7 @@ answers.sort((first, second) =>
 const form = document.querySelector('#guess-form');
 const guess = document.querySelector('#guess');
 const progress = document.querySelector('#progress');
+const guessPanel = document.querySelector('.guess-panel');
 const feedback = document.querySelector('#feedback');
 const answerTable = document.querySelector('#answers');
 const answerBody = document.querySelector('#answers tbody');
@@ -122,7 +123,7 @@ const rows = answers.map(({ code, hashes }) => {
   const name = row.insertCell();
   const wordLengths = code.match(/\d+/g);
   const mask = wordLengths.map((length) => '*'.repeat(Number(length))).join(' ');
-  return { id: hashes[0], status, name, mask };
+  return { id: hashes[0], row, status, name, mask, revealFrame: null };
 });
 
 const solved = new Map();
@@ -141,12 +142,76 @@ try {
 function updateProgress() {
   progress.textContent = `${solved.size} of ${answers.length} answers found`;
   resetProgress.disabled = solved.size === 0 || guess.readOnly;
-  for (const { id, status, name, mask } of rows) {
+  for (const { id, status, name, mask, revealFrame } of rows) {
     const isSolved = solved.has(id);
     status.textContent = isSolved ? '✅' : '❔';
     status.setAttribute('aria-label', isSolved ? 'Solved' : 'Unsolved');
-    name.textContent = solved.get(id) ?? mask;
+    if (revealFrame === null) name.textContent = solved.get(id) ?? mask;
   }
+}
+
+function revealAnswer(entry, answerName) {
+  const { row, name, mask } = entry;
+  const { top, bottom } = row.getBoundingClientRect();
+  const viewport = window.visualViewport;
+  const viewportTop = viewport?.offsetTop ?? 0;
+  const visibleTop = Math.max(viewportTop, guessPanel.getBoundingClientRect().bottom);
+  const visibleBottom = viewportTop + (viewport?.height ?? window.innerHeight);
+
+  const duration = 750;
+  const revealDelay = 100;
+  const characters = Array.from(answerName);
+  let startedAt;
+  name.textContent = mask;
+
+  function startReveal(now) {
+    startedAt = now;
+    row.classList.add('answer-reveal');
+    entry.revealFrame = requestAnimationFrame(revealNextFrame);
+  }
+
+  function revealNextFrame(now) {
+    const elapsed = now - startedAt;
+    if (elapsed >= duration) {
+      name.textContent = answerName;
+      row.classList.remove('answer-reveal');
+      entry.revealFrame = null;
+      return;
+    }
+
+    const revealed = Math.floor(
+      characters.length * Math.max(0, elapsed - revealDelay) / (duration - revealDelay),
+    );
+    name.textContent = characters.slice(0, revealed).join('') + mask.slice(revealed);
+    entry.revealFrame = requestAnimationFrame(revealNextFrame);
+  }
+
+  if (top >= visibleTop && bottom <= visibleBottom) {
+    startReveal(performance.now());
+    return;
+  }
+
+  const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+  const scrollTarget = Math.max(0, Math.min(maxScroll, window.scrollY + top - visibleTop - 8));
+  const scrollDeadline = performance.now() + 1000;
+  window.scrollTo({ top: scrollTarget, behavior: 'smooth' });
+
+  function waitForScroll(now) {
+    if (Math.abs(window.scrollY - scrollTarget) <= 1) {
+      startReveal(now);
+      return;
+    }
+
+    if (now >= scrollDeadline) {
+      window.scrollTo({ top: scrollTarget, behavior: 'instant' });
+      startReveal(now);
+      return;
+    }
+
+    entry.revealFrame = requestAnimationFrame(waitForScroll);
+  }
+
+  entry.revealFrame = requestAnimationFrame(waitForScroll);
 }
 
 async function hashName(name) {
@@ -173,6 +238,12 @@ resetProgress.addEventListener('click', () => {
     return;
   }
   solved.clear();
+  for (const entry of rows) {
+    if (entry.revealFrame === null) continue;
+    cancelAnimationFrame(entry.revealFrame);
+    entry.revealFrame = null;
+    entry.row.classList.remove('answer-reveal');
+  }
   guess.value = '';
   clearSuggestions();
   updateProgress();
@@ -217,6 +288,7 @@ form.addEventListener('submit', async (event) => {
 
     solved.set(id, name);
     guess.value = '';
+    revealAnswer(rows.find((entry) => entry.id === id), name);
     updateProgress();
     feedback.textContent = solved.size === answers.length
       ? 'You found every answer!'
