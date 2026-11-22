@@ -105,6 +105,14 @@ const answers = [
     ],
   },
   {
+    code: 'B6_5_9',
+    hashes: [
+      '1c1a1ddd1427586605556a6e32b09b7d75d980c3afd47ee6071a12ca19503dad',
+      '076b5b724bf704cf1a1e6a7adab98733eba8b8c8708aea662222b0a8bf1a9c14',
+      'f5fd692875ec5df3f066ac0b3723459494b87f4d0bdae1822a6baae280fb1bfd',
+    ],
+  },
+  {
     code: 'B6_7',
     hashes: [
       '18709778cf913a03d4158fe787f87a2648bfc0197628507b6d7f09b0fdafdd60',
