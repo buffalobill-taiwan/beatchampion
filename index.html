@@ -5,18 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Beat Sun’s Champion!</title>
   <link rel="stylesheet" href="./style.css">
+  <script src="./answers.js" defer></script>
   <script src="./script.js" defer></script>
 </head>
 <body>
   <main>
     <h1>Beat Sun’s Champion!</h1>
+    <nav class="page-nav" aria-label="Game information">
+      <a href="./rule.html">Rules</a>
+      <a href="./note.html">Notes</a>
+    </nav>
     <section class="guess-panel" aria-label="Submit an answer">
       <p id="progress" role="status">The new puzzle is coming soon.</p>
       <form id="guess-form" hidden>
         <label for="guess">Card name</label>
         <div class="guess-controls">
-          <input id="guess" name="guess" type="text" list="card-suggestions" autocomplete="off" enterkeyhint="go" required>
-          <datalist id="card-suggestions"></datalist>
+          <div class="card-picker">
+            <input id="guess" name="guess" type="text" role="combobox" aria-autocomplete="list"
+              aria-controls="card-suggestions" aria-expanded="false" autocomplete="off" enterkeyhint="go" required>
+            <ul id="card-suggestions" role="listbox" aria-label="Card suggestions" hidden></ul>
+          </div>
           <button type="submit">Check</button>
         </div>
       </form>

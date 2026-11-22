@@ -1,9 +1,3 @@
-// The code gives the color and word lengths. The first hash identifies the answer in saved progress.
-const answers = [
-  { code: 'W6_5', hashes: ['bb5343c06955118bcdae9109f2b7d8a45a9b305c1ae85925132d93432c9528a8'] },
-  { code: 'U10_6', hashes: ['c058d34d312bf86fe3ce2f8fa6dc8e93c37d0ad09cdbbb9279e754ab3a36d206'] },
-];
-
 const colorOrder = 'WUBRGZCL';
 const storageKey = 'beatchampion:solved:v1';
 
@@ -23,20 +17,22 @@ const cardSuggestions = document.querySelector('#card-suggestions');
 
 let suggestionTimer;
 let suggestionRequest;
+let activeSuggestion = -1;
 
 function clearSuggestions() {
   clearTimeout(suggestionTimer);
   suggestionRequest?.abort();
+  activeSuggestion = -1;
+  guess.removeAttribute('aria-activedescendant');
+  guess.setAttribute('aria-expanded', 'false');
+  cardSuggestions.hidden = true;
   cardSuggestions.replaceChildren();
 }
 
 guess.addEventListener('input', (event) => {
   const query = guess.value.trim();
-  const selectedSuggestion = Array.from(cardSuggestions.options).some(
-    (option) => option.value === guess.value,
-  );
   clearSuggestions();
-  if (event.isComposing || selectedSuggestion || query.length < 2) return;
+  if (event.isComposing || query.length < 2) return;
 
   suggestionTimer = setTimeout(async () => {
     const request = new AbortController();
@@ -52,20 +48,68 @@ guess.addEventListener('input', (event) => {
       if (!response.ok) return;
 
       const { data } = await response.json();
-      if (request.signal.aborted || !Array.isArray(data)) return;
+      if (request.signal.aborted || !Array.isArray(data) || data.length === 0) return;
 
-      const options = data.map((name) => {
-        const option = document.createElement('option');
-        option.value = name;
+      const options = data.map((name, index) => {
+        const option = document.createElement('li');
+        option.id = `card-option-${index}`;
+        option.setAttribute('role', 'option');
+        option.setAttribute('aria-selected', 'false');
+        option.textContent = name;
         return option;
       });
       cardSuggestions.replaceChildren(...options);
+      cardSuggestions.scrollTop = 0;
+      cardSuggestions.hidden = false;
+      guess.setAttribute('aria-expanded', 'true');
     } catch {
       // Manual entry remains available if suggestions cannot be loaded.
     } finally {
       if (suggestionRequest === request) suggestionRequest = undefined;
     }
   }, 300);
+});
+
+function submitSuggestion(option) {
+  guess.value = option.textContent;
+  form.requestSubmit();
+}
+
+cardSuggestions.addEventListener('mousedown', (event) => event.preventDefault());
+cardSuggestions.addEventListener('click', (event) => {
+  const option = event.target.closest('[role="option"]');
+  if (option) submitSuggestion(option);
+});
+guess.addEventListener('blur', clearSuggestions);
+
+guess.addEventListener('keydown', (event) => {
+  if (event.isComposing) return;
+
+  if (event.key === 'Escape') {
+    if (!cardSuggestions.hidden) event.preventDefault();
+    clearSuggestions();
+    return;
+  }
+
+  const options = cardSuggestions.children;
+  if (options.length === 0) return;
+
+  if (event.key === 'Enter' && activeSuggestion >= 0) {
+    event.preventDefault();
+    submitSuggestion(options[activeSuggestion]);
+  }
+
+  if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+    event.preventDefault();
+    options[activeSuggestion]?.setAttribute('aria-selected', 'false');
+    activeSuggestion = event.key === 'ArrowDown'
+      ? (activeSuggestion + 1) % options.length
+      : (activeSuggestion <= 0 ? options.length - 1 : activeSuggestion - 1);
+    const option = options[activeSuggestion];
+    option.setAttribute('aria-selected', 'true');
+    guess.setAttribute('aria-activedescendant', option.id);
+    option.scrollIntoView({ block: 'nearest' });
+  }
 });
 
 const rows = answers.map(({ code, hashes }) => {
@@ -76,7 +120,8 @@ const rows = answers.map(({ code, hashes }) => {
   status.setAttribute('role', 'img');
   row.insertCell().append(status);
   const name = row.insertCell();
-  const mask = code.slice(1).split('_').map((length) => '*'.repeat(Number(length))).join(' ');
+  const wordLengths = code.match(/\d+/g);
+  const mask = wordLengths.map((length) => '*'.repeat(Number(length))).join(' ');
   return { id: hashes[0], status, name, mask };
 });
 
