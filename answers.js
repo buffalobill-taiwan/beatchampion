@@ -98,6 +98,14 @@ const answers = [
     ],
   },
   {
+    code: 'U5_5_6',
+    hashes: [
+      '465d2fa83890e486f948a0594ceb6bf7c9ca28751e0d30e0a0beb664454dac31',
+      'a5cb1ee748b4c3cba6c448b300d82d796e37709e202bb338748638c80b23f7c8',
+      '65014c28e62728637a760f4f97deb53662f156581464a84fde7ab8bc5da65d79',
+    ],
+  },
+  {
     code: 'U5_7_2_9',
     hashes: [
       '29f290277a95a7bfff52dd2018a0d8bc2effbaf686292bc7033b1e46b2c530ff',
