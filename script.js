@@ -158,16 +158,15 @@ const lowercaseTitleWords = new Set(
 );
 
 function formatCardName(name) {
+  [name] = name.split(' // ', 1);
   if (/\p{L}/u.test(name.replace(/\p{Script=Latin}/gu, ''))) return name;
 
-  return name.split('//').map((face) => {
-    let isFirstWord = true;
-    return face.toLowerCase().replace(/\p{L}[\p{L}\p{M}]*(?:['’][\p{L}\p{M}]+)*/gu, (word) => {
-      const capitalize = isFirstWord || !lowercaseTitleWords.has(word);
-      isFirstWord = false;
-      return capitalize ? word.replace(/^\p{L}/u, (letter) => letter.toUpperCase()) : word;
-    });
-  }).join('//');
+  let isFirstWord = true;
+  return name.toLowerCase().replace(/\p{L}[\p{L}\p{M}]*(?:['’][\p{L}\p{M}]+)*/gu, (word) => {
+    const capitalize = isFirstWord || !lowercaseTitleWords.has(word);
+    isFirstWord = false;
+    return capitalize ? word.replace(/^\p{L}/u, (letter) => letter.toUpperCase()) : word;
+  });
 }
 
 const solved = new Map();
