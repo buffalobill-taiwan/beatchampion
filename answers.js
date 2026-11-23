@@ -234,6 +234,14 @@ const answers = [
     ],
   },
   {
+    code: 'Z5_10',
+    hashes: [
+      '6f67a9e1d5470df3e4f18019e088b1ec0acb457e99360aa184e158789957c267',
+      '8261ba7102b6fe1f1f0a12b8975609b029724d22d4bf0b44edf8fc55cd523b0a',
+      '30f3a50302ae349a4c87f710ba494993bc7f375d2aac5cb4cec71514ffecaf58',
+    ],
+  },
+  {
     code: 'Z6',
     hashes: [
       '00b98fbe67a35fae066af21b73f9ebd1eefbd67d5a45a8df4615baaeb1dd0c2c',
