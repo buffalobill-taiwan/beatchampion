@@ -98,6 +98,14 @@ const answers = [
     ],
   },
   {
+    code: 'W11',
+    hashes: [
+      '4b72c5da6b7a65da9dbc91d9b92d13d9ff515f05fb7bc7a5b5bdb6cae5df3b85',
+      '99decf42c8db1a11d221a9552261c662127eff88747bdbbf017fc6158ce671ee',
+      '8b00b9f4dc9c8b326de04c0afbbfc1ae4ba91ddefd31dbebfd50d58f4a6dcacb',
+    ],
+  },
+  {
     code: 'U5_5_6',
     hashes: [
       '465d2fa83890e486f948a0594ceb6bf7c9ca28751e0d30e0a0beb664454dac31',
@@ -159,6 +167,14 @@ const answers = [
       'd2a0f19408976ba9d654b552db99ed57c242cb1e99f83ba10919f9c345267982',
       'c22f7120799c6057473fb35c058ff72d2cdf48578513cf7294360851701d2d23',
       '651a617ed11b5794993a7441ba09cb4ec83499041807a6236b3aa0f1dd55914e',
+    ],
+  },
+  {
+    code: 'B7_8',
+    hashes: [
+      '656da0e2780c025aa719d3392ec47fdf20d9ebd2ef75fb6342ef9b53d6d16b41',
+      '029726bcca28da487a9a8c4ce7453516a21a2e274d118fffb90a2b87ccd28649',
+      '50550917b2ceb2b24404847e5b75f7dc771f0052853f473a08f7f1fab0d64750',
     ],
   },
   {
@@ -321,11 +337,34 @@ const answers = [
     ],
   },
   {
+    code: 'Z8_8_6b',
+    hashes: [
+      '1ff8b14ba6733a77055c0d8b935d8882ef22d5bd8b40d38aa5bf85a5bd2d2961',
+      '9059950391d381d5f6ab7ed38d590bb89b028498981186f6247a313f83a052d4',
+    ],
+  },
+  {
     code: 'Z9_3_8_5',
     hashes: [
       '8c2dd9d846b17229adfbd6423856d9b3000c496439ecb8ec9e6fa33ac94eb19b',
       'a66731d0227ba2ac5ae1985e2c7b8e47ef034e11183deb5a12087012907a91df',
       'df1d8d3c79fd5205dac9985a778cfb7997fff7c488549aa6e12b67749f650be0',
+    ],
+  },
+  {
+    code: 'C5_5_7_3',
+    hashes: [
+      'b5af0401e503b608e3a7f128c6d7a49db683280cd57da63a58ef9546c5822537',
+      '8c526ffcfcbe657b4f4793ad2f16a886d09a707aec2ebf11c84f5ebeb6e2016d',
+      'ff6b8f0ed0e17de64fa64cf96659434ce91167af77b017423e496092b7ad522d',
+    ],
+  },
+  {
+    code: 'C11_7',
+    hashes: [
+      '8972a769c0e48ba1258d0a366fb41df35c0116aa9c3ea19be022a05e91b6b8c5',
+      'bd3b87796f2cc9e6ab652b8023ac415b725d764277859f1aae5e6079a8825315',
+      'b5f3e5e978128c2db15cdf7ea50ba5d4c7229d07418c05d784e617deae280add',
     ],
   },
 ];
