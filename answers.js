@@ -18,6 +18,13 @@ const answers = [
     ],
   },
   {
+    code: 'W6_2_3_8',
+    hashes: [
+      'd73e0751b549b3c380db43c1865ecc8b101744bdedb480e55e0899fcff89df93',
+      'fed39e7482347046de42d6aa11900d1766cdf82c20948fe9e1d65ea7cc82741e',
+    ],
+  },
+  {
     code: 'W6_5',
     hashes: [
       'bb5343c06955118bcdae9109f2b7d8a45a9b305c1ae85925132d93432c9528a8',
