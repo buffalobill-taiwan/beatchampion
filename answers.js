@@ -265,6 +265,14 @@ const answers = [
     ],
   },
   {
+    code: 'Z4_3_3_3',
+    hashes: [
+      '151355ad27dc627f1069409376182a8afa27cac5f11eac9bd9355f1d5abc21aa',
+      '24e6a6cd5777414bc01800cdc55b66887f2abace4214053773d1f3432b87c688',
+      '2138be6598a23592861cbafeac83cd1d5a5949c068e3ff8f0459552a11ab81a0',
+    ],
+  },
+  {
     code: 'Z5_1_4_8_6',
     hashes: [
       '65ec27dc7006e1e21eab34f8ef39068e055122361ae4c9ff4a084bdaba296660',
