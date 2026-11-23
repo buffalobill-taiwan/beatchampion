@@ -138,6 +138,14 @@ const answers = [
     ],
   },
   {
+    code: 'B6_3_11',
+    hashes: [
+      'ecd1a6fc5eae2eb3e972abb218ae3893143b319b0e0c971c4e201acd552c2855',
+      '3673d45fd69eba4cc0ac46bdff44cd0197342041950ae9cd6caed2cbcecb2f23',
+      '417ecc79159d8996bacfd0d54447df0d0bda3c2eced6b332e345135f2e3be658',
+    ],
+  },
+  {
     code: 'B6_7',
     hashes: [
       '18709778cf913a03d4158fe787f87a2648bfc0197628507b6d7f09b0fdafdd60',
