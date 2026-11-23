@@ -19,8 +19,8 @@ answer list and why several common guesses fail.
 
 Each entry in [answers.js](answers.js) contains a `code` and a `hashes` array.
 
-- Start the code with `W` (white), `U` (blue), `B` (black), `R` (red), `G`
-  (green), `Z` (multicolor), `C` (colorless), or `L` (land).
+- Start the code with `C` (colorless), `W` (white), `U` (blue), `B` (black),
+  `R` (red), `G` (green), `Z` (multicolor), `A` (artifact), or `L` (land).
 - Append the word lengths from the English name, separated by underscores.
   Count punctuation as part of the word. Use a suffix such as `b` to distinguish
   entries with the same code.
@@ -29,5 +29,5 @@ Each entry in [answers.js](answers.js) contains a `code` and a `hashes` array.
   store its SHA-256 digest as lowercase hexadecimal. Keep the English name’s
   hash first because saved progress uses it as the answer’s identifier.
 
-The game sorts entries by color in `WUBRGZCL` order, then by word length. Answer
+The game sorts entries by category in `CWUBRGZAL` order, then by word length. Answer
 checking runs in the browser against the public hashes.

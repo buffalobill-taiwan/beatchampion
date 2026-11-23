@@ -261,6 +261,10 @@ td {
   color: #b9c3d5;
 }
 
+#answers [data-card-color="A"] {
+  color: #c49a7b;
+}
+
 #answers [data-card-color="L"] {
   color: #efa978;
 }

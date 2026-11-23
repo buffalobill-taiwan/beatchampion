@@ -368,7 +368,7 @@ const answers = [
     ],
   },
   {
-    code: 'C5_5_7_3',
+    code: 'A5_5_7_3',
     hashes: [
       'b5af0401e503b608e3a7f128c6d7a49db683280cd57da63a58ef9546c5822537',
       '8c526ffcfcbe657b4f4793ad2f16a886d09a707aec2ebf11c84f5ebeb6e2016d',
@@ -376,7 +376,7 @@ const answers = [
     ],
   },
   {
-    code: 'C11_7',
+    code: 'A11_7',
     hashes: [
       '8972a769c0e48ba1258d0a366fb41df35c0116aa9c3ea19be022a05e91b6b8c5',
       'bd3b87796f2cc9e6ab652b8023ac415b725d764277859f1aae5e6079a8825315',

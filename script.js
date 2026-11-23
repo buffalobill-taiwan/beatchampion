@@ -1,4 +1,4 @@
-const colorOrder = 'WUBRGZCL';
+const colorOrder = 'CWUBRGZAL';
 const storageKey = 'beatchampion:solved:v1';
 
 answers.sort((first, second) =>
