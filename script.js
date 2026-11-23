@@ -153,13 +153,30 @@ const rows = answers.map(({ code, hashes }) => {
   return { id: hashes[0], row, status, name, mask, revealFrame: null };
 });
 
+const lowercaseTitleWords = new Set(
+  'a an the and but or nor as at by for from in of on per to via with'.split(' '),
+);
+
+function formatCardName(name) {
+  if (/\p{L}/u.test(name.replace(/\p{Script=Latin}/gu, ''))) return name;
+
+  return name.split('//').map((face) => {
+    let isFirstWord = true;
+    return face.toLowerCase().replace(/\p{L}[\p{L}\p{M}]*(?:['’][\p{L}\p{M}]+)*/gu, (word) => {
+      const capitalize = isFirstWord || !lowercaseTitleWords.has(word);
+      isFirstWord = false;
+      return capitalize ? word.replace(/^\p{L}/u, (letter) => letter.toUpperCase()) : word;
+    });
+  }).join('//');
+}
+
 const solved = new Map();
 
 try {
   const saved = JSON.parse(localStorage.getItem(storageKey));
   for (const { id } of rows) {
     if (typeof saved?.[id] === 'string' && saved[id].trim()) {
-      solved.set(id, saved[id]);
+      solved.set(id, formatCardName(saved[id]));
     }
   }
 } catch {
@@ -312,9 +329,10 @@ form.addEventListener('submit', async (event) => {
       return;
     }
 
-    solved.set(id, name);
+    const displayName = formatCardName(name);
+    solved.set(id, displayName);
     guess.value = '';
-    revealAnswer(rows.find((entry) => entry.id === id), name);
+    revealAnswer(rows.find((entry) => entry.id === id), displayName);
     updateProgress();
     feedback.textContent = solved.size === answers.length
       ? 'You found every answer!'
