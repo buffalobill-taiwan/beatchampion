@@ -10,6 +10,14 @@ const answers = [
     ],
   },
   {
+    code: 'W5_5_7_3',
+    hashes: [
+      'b5af0401e503b608e3a7f128c6d7a49db683280cd57da63a58ef9546c5822537',
+      '8c526ffcfcbe657b4f4793ad2f16a886d09a707aec2ebf11c84f5ebeb6e2016d',
+      'ff6b8f0ed0e17de64fa64cf96659434ce91167af77b017423e496092b7ad522d',
+    ],
+  },
+  {
     code: 'W5_10',
     hashes: [
       '097c3247b422e3f150641a3c9259d5c94448d699e0e8d6200dbf6027c69cb7eb',
@@ -389,14 +397,6 @@ const answers = [
       '8c2dd9d846b17229adfbd6423856d9b3000c496439ecb8ec9e6fa33ac94eb19b',
       'a66731d0227ba2ac5ae1985e2c7b8e47ef034e11183deb5a12087012907a91df',
       'df1d8d3c79fd5205dac9985a778cfb7997fff7c488549aa6e12b67749f650be0',
-    ],
-  },
-  {
-    code: 'A5_5_7_3',
-    hashes: [
-      'b5af0401e503b608e3a7f128c6d7a49db683280cd57da63a58ef9546c5822537',
-      '8c526ffcfcbe657b4f4793ad2f16a886d09a707aec2ebf11c84f5ebeb6e2016d',
-      'ff6b8f0ed0e17de64fa64cf96659434ce91167af77b017423e496092b7ad522d',
     ],
   },
   {
