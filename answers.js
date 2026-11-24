@@ -313,6 +313,14 @@ const answers = [
     ],
   },
   {
+    code: 'Z7_3_5_4',
+    hashes: [
+      '2eb442d57253942414fb6ccc556501dc7af49963d9b720334eeb0a0a69c87b4e',
+      '3bba5099715202d00dea8839ea7744d46c76ce7c77b5cd060b0e21303618f596',
+      '8bd192a9079687a8d3e72f1b8b66ae610f546eb23d762f032e171fdbe8f2a86b',
+    ],
+  },
+  {
     code: 'Z7_7_7',
     hashes: [
       '657756673f616ece730126c0aec41afdc5d42f53fd593854e6f8b2dbb9ea0df9',
