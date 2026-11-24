@@ -14,6 +14,9 @@ const feedback = document.querySelector('#feedback');
 const answerTable = document.querySelector('#answers');
 const answerBody = document.querySelector('#answers tbody');
 const resetProgress = document.querySelector('#reset-progress');
+const shareProgress = document.querySelector('#share-progress');
+const shareDialog = document.querySelector('#share-dialog');
+const shareText = document.querySelector('#share-text');
 const cardSuggestions = document.querySelector('#card-suggestions');
 
 let suggestionTimer;
@@ -269,10 +272,21 @@ async function hashName(name) {
 if (answers.length > 0) {
   form.hidden = false;
   answerTable.hidden = false;
+  shareProgress.hidden = false;
   updateProgress();
 }
 
+shareProgress.addEventListener('click', () => {
+  shareText.value = answers.map(({ code, hashes }) =>
+    `${solved.has(hashes[0]) ? '✅' : '❌'} ${code}`,
+  ).join('\n');
+  shareDialog.showModal();
+  shareText.select();
+});
+
 resetProgress.addEventListener('click', () => {
+  if (!window.confirm('Reset your progress? All solved answers will be cleared.')) return;
+
   try {
     localStorage.removeItem(storageKey);
   } catch {

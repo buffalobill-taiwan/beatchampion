@@ -40,7 +40,17 @@
       </thead>
       <tbody></tbody>
     </table>
-    <button type="button" id="reset-progress" hidden>Reset progress</button>
+    <div class="progress-controls">
+      <button type="button" id="share-progress" aria-haspopup="dialog" hidden>Share Progress</button>
+      <button type="button" id="reset-progress" hidden>Reset progress</button>
+    </div>
+    <dialog id="share-dialog" aria-labelledby="share-title">
+      <h2 id="share-title">Share Progress</h2>
+      <textarea id="share-text" aria-label="Progress to share" rows="12" readonly autofocus></textarea>
+      <form method="dialog">
+        <button>Close</button>
+      </form>
+    </dialog>
   </main>
 </body>
 </html>

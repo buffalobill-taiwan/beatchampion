@@ -92,7 +92,7 @@ button:enabled:hover {
   background: #3b5688;
 }
 
-:where(input, button):focus-visible {
+:where(input, button, textarea):focus-visible {
   outline: 2px solid var(--focus);
   outline-offset: 2px;
 }
@@ -108,9 +108,48 @@ button:enabled:hover {
   border-bottom: 1px solid var(--divider);
 }
 
+.progress-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
 #progress {
   margin: 0 0 0.5rem;
   color: var(--muted-text);
+}
+
+#share-dialog {
+  box-sizing: border-box;
+  inline-size: min(24rem, calc(100% - 2rem));
+  max-block-size: calc(100% - 2rem);
+  padding: 1rem;
+  border: 1px solid var(--control-border);
+  border-radius: 0.5rem;
+  background: var(--surface);
+  color: var(--text);
+}
+
+#share-dialog::backdrop {
+  background: #0009;
+}
+
+#share-title {
+  margin-block: 0 0.75rem;
+}
+
+#share-text {
+  display: block;
+  box-sizing: border-box;
+  inline-size: 100%;
+  max-block-size: 45vh;
+  margin-block-end: 0.75rem;
+  padding: 0.5rem;
+  border: 1px solid var(--control-border);
+  background: var(--page-background);
+  color: var(--text);
+  font: 1rem ui-monospace, monospace;
+  resize: vertical;
 }
 
 .guess-controls {
