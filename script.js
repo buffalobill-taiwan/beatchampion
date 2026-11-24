@@ -187,7 +187,9 @@ try {
 
 function updateProgress() {
   progress.textContent = `${solved.size} of ${answers.length} answers found`;
-  resetProgress.hidden = solved.size === 0;
+  const hasProgress = solved.size > 0;
+  resetProgress.hidden = !hasProgress;
+  shareProgress.hidden = !hasProgress;
   for (const { id, status, name, mask, revealFrame } of rows) {
     const isSolved = solved.has(id);
     status.textContent = isSolved ? '✅' : '❔';
@@ -272,7 +274,6 @@ async function hashName(name) {
 if (answers.length > 0) {
   form.hidden = false;
   answerTable.hidden = false;
-  shareProgress.hidden = false;
   updateProgress();
 }
 
