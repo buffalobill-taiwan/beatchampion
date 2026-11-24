@@ -384,6 +384,14 @@ const answers = [
     ],
   },
   {
+    code: 'A9_7',
+    hashes: [
+      'be1e0aba8a279dcd38c6120dec45b6774bc576b3c03c3790b76397f3205ca9aa',
+      '936033134f3b3aabaaef5eda3f24f0001927df8631215a6b56c73ec2a0fbbbdc',
+      'ce4ecfd3cb1e97d024ca1b11ef42c7e6199a55c96d856cebef07fa5b239a0f4b',
+    ],
+  },
+  {
     code: 'A11_7',
     hashes: [
       '8972a769c0e48ba1258d0a366fb41df35c0116aa9c3ea19be022a05e91b6b8c5',
