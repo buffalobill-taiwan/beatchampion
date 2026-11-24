@@ -17,6 +17,10 @@ const resetProgress = document.querySelector('#reset-progress');
 const shareProgress = document.querySelector('#share-progress');
 const shareDialog = document.querySelector('#share-dialog');
 const shareText = document.querySelector('#share-text');
+const shareTabs = Array.from(shareDialog.querySelectorAll('[role="tab"]'));
+const shareImage = document.querySelector('#share-image');
+const downloadProgress = document.querySelector('#download-progress');
+const shareImageError = document.querySelector('#share-image-error');
 const cardSuggestions = document.querySelector('#card-suggestions');
 
 let suggestionTimer;
@@ -277,9 +281,100 @@ if (answers.length > 0) {
   updateProgress();
 }
 
+let shareEntries = [];
+let previewReady = false;
+
+function renderShareImage() {
+  const width = 640;
+  const scale = 2;
+  const columns = 5;
+  const padding = 16;
+  const rowHeight = 32;
+  const columnWidth = (width - padding * 2) / columns;
+  const height = padding * 2 + Math.ceil(shareEntries.length / columns) * rowHeight;
+  shareImage.width = width * scale;
+  shareImage.height = height * scale;
+  const context = shareImage.getContext('2d');
+  if (!context) return false;
+
+  context.scale(scale, scale);
+  context.fillStyle = '#141923';
+  context.fillRect(0, 0, width, height);
+  context.font = '14px monospace';
+  context.textBaseline = 'middle';
+  context.lineWidth = 2.5;
+  context.lineCap = 'round';
+  context.lineJoin = 'round';
+  shareEntries.forEach(({ code, isSolved }, index) => {
+    const x = padding + (index % columns) * columnWidth;
+    const y = padding + Math.floor(index / columns) * rowHeight + rowHeight / 2;
+    context.strokeStyle = isSolved ? '#83e1a3' : '#ff929b';
+    context.beginPath();
+    if (isSolved) {
+      context.moveTo(x + 2, y);
+      context.lineTo(x + 7, y + 5);
+      context.lineTo(x + 16, y - 5);
+    } else {
+      context.moveTo(x + 4, y - 5);
+      context.lineTo(x + 14, y + 5);
+      context.moveTo(x + 14, y - 5);
+      context.lineTo(x + 4, y + 5);
+    }
+    context.stroke();
+    context.fillStyle = '#e5e9f0';
+    context.fillText(code, x + 24, y, columnWidth - 32);
+  });
+  return true;
+}
+
+function selectShareTab(selected) {
+  for (const tab of shareTabs) {
+    const active = tab === selected;
+    tab.setAttribute('aria-selected', String(active));
+    tab.tabIndex = active ? 0 : -1;
+    document.getElementById(tab.getAttribute('aria-controls')).hidden = !active;
+  }
+  if (selected.id !== 'share-tab-png' || previewReady) return;
+  previewReady = renderShareImage();
+  shareImage.hidden = !previewReady;
+  downloadProgress.disabled = !previewReady;
+  shareImageError.hidden = previewReady;
+  shareImageError.textContent = previewReady ? '' : 'Unable to generate the PNG preview.';
+}
+
+for (const [index, tab] of shareTabs.entries()) {
+  tab.addEventListener('click', () => selectShareTab(tab));
+  tab.addEventListener('keydown', (event) => {
+    const destinations = { ArrowLeft: 1 - index, ArrowRight: 1 - index, Home: 0, End: 1 };
+    if (!Object.hasOwn(destinations, event.key)) return;
+    event.preventDefault();
+    const nextTab = shareTabs[destinations[event.key]];
+    selectShareTab(nextTab);
+    nextTab.focus();
+  });
+}
+
+downloadProgress.addEventListener('click', () => {
+  try {
+    const url = shareImage.toDataURL('image/png');
+    if (url === 'data:,') throw new Error('Empty PNG');
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'beatchampion-progress.png';
+    link.click();
+    shareImageError.hidden = true;
+  } catch {
+    shareImageError.textContent = 'Unable to download the PNG.';
+    shareImageError.hidden = false;
+  }
+});
+
 shareProgress.addEventListener('click', () => {
-  shareText.value = answers.map(({ code, hashes }) =>
-    `${solved.has(hashes[0]) ? '✅' : '❌'} ${code}`,
+  shareEntries = answers.map(({ code, hashes }) => ({ code, isSolved: solved.has(hashes[0]) }));
+  previewReady = false;
+  selectShareTab(shareTabs[0]);
+  shareText.value = shareEntries.map(({ code, isSolved }) =>
+    `${isSolved ? '✅' : '❌'} ${code}`,
   ).join('\n');
   shareDialog.showModal();
   shareText.select();

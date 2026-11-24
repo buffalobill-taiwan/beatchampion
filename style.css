@@ -121,7 +121,8 @@ button:enabled:hover {
 
 #share-dialog {
   box-sizing: border-box;
-  inline-size: min(24rem, calc(100% - 2rem));
+  inline-size: 42rem;
+  max-inline-size: calc(100% - 2rem);
   max-block-size: calc(100% - 2rem);
   padding: 1rem;
   border: 1px solid var(--control-border);
@@ -136,6 +137,27 @@ button:enabled:hover {
 
 #share-title {
   margin-block: 0 0.75rem;
+}
+
+.share-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-block-end: 0.75rem;
+}
+
+.share-tabs [aria-selected="false"] {
+  background: var(--surface);
+}
+
+#share-panel-png {
+  margin-block-end: 0.75rem;
+}
+
+#share-image:not([hidden]) {
+  display: block;
+  inline-size: 100%;
+  block-size: auto;
+  margin-block-end: 0.75rem;
 }
 
 #share-text {

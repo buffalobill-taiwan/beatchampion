@@ -46,7 +46,18 @@
     </div>
     <dialog id="share-dialog" aria-labelledby="share-title">
       <h2 id="share-title">Share Progress</h2>
-      <textarea id="share-text" aria-label="Progress to share" rows="12" readonly autofocus></textarea>
+      <div class="share-tabs" role="tablist" aria-label="Share format">
+        <button type="button" id="share-tab-text" role="tab" aria-selected="true" aria-controls="share-panel-text">Text</button>
+        <button type="button" id="share-tab-png" role="tab" aria-selected="false" aria-controls="share-panel-png" tabindex="-1">PNG</button>
+      </div>
+      <div id="share-panel-text" role="tabpanel" aria-labelledby="share-tab-text">
+        <textarea id="share-text" aria-label="Progress to share" rows="12" readonly autofocus></textarea>
+      </div>
+      <div id="share-panel-png" role="tabpanel" aria-labelledby="share-tab-png" hidden>
+        <canvas id="share-image" role="img" aria-label="Progress image preview"></canvas>
+        <button type="button" id="download-progress">Download PNG</button>
+        <p id="share-image-error" role="status" hidden></p>
+      </div>
       <form method="dialog">
         <button>Close</button>
       </form>
