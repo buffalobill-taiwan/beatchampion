@@ -23,7 +23,7 @@ body::before {
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background: url("./Elspeth.jpg") center / cover no-repeat;
+  background: url("./img/Elspeth.jpg") center / cover no-repeat;
   opacity: 0.07;
 }
 
