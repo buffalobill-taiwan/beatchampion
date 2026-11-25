@@ -1,5 +1,9 @@
 const colorOrder = 'CWUBRGZAL';
 const storageKey = 'beatchampion:solved:v1';
+const starterAnswerIds = [
+  'bb5343c06955118bcdae9109f2b7d8a45a9b305c1ae85925132d93432c9528a8', // Barren Glory
+  'c058d34d312bf86fe3ce2f8fa6dc8e93c37d0ad09cdbbb9279e754ab3a36d206', // Laboratory Maniac
+];
 
 answers.sort((first, second) =>
   colorOrder.indexOf(first.code[0]) - colorOrder.indexOf(second.code[0]) ||
@@ -279,6 +283,11 @@ if (answers.length > 0) {
   form.hidden = false;
   answerTable.hidden = false;
   updateProgress();
+  if (solved.size === answers.length) {
+    feedback.textContent = 'You found every answer!';
+  } else if (starterAnswerIds.every((id) => solved.has(id))) {
+    feedback.textContent = 'Input the Cardname';
+  }
 }
 
 let shareEntries = [];
