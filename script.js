@@ -206,8 +206,12 @@ function updateProgress() {
   }
 }
 
-function revealAnswer(entry, answerName) {
+function revealAnswer(entry, answerName, reposition) {
   const { row, name, mask } = entry;
+  if (entry.revealFrame !== null) {
+    cancelAnimationFrame(entry.revealFrame);
+    row.classList.remove('answer-reveal');
+  }
   const { top, bottom } = row.getBoundingClientRect();
   const viewport = window.visualViewport;
   const viewportTop = viewport?.offsetTop ?? 0;
@@ -242,7 +246,7 @@ function revealAnswer(entry, answerName) {
     entry.revealFrame = requestAnimationFrame(revealNextFrame);
   }
 
-  if (top >= visibleTop && bottom <= visibleBottom) {
+  if (!reposition && top >= visibleTop && bottom <= visibleBottom) {
     startReveal(performance.now());
     return;
   }
@@ -441,16 +445,17 @@ form.addEventListener('submit', async (event) => {
     }
 
     const id = answer.hashes[0];
-    if (solved.has(id)) {
+    const displayName = formatCardName(name);
+    const previousName = solved.get(id);
+    if (previousName === displayName) {
       feedback.textContent = 'You already found that answer.';
       guess.select();
       return;
     }
 
-    const displayName = formatCardName(name);
     solved.set(id, displayName);
     guess.value = '';
-    revealAnswer(rows.find((entry) => entry.id === id), displayName);
+    revealAnswer(rows.find((entry) => entry.id === id), displayName, previousName !== undefined);
     updateProgress();
     feedback.textContent = solved.size === answers.length
       ? 'You found every answer!'
